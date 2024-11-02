@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://vloneskorpion.github.io/website/sitemap.xml
+Sitemap: https://knowak.dev/sitemap.xml
