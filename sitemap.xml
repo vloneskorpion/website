@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://127.0.0.1:1111/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/about/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/about/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/archive/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/archive/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/page/1/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/page/1/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/tags/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/tags/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/tags/bash/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/tags/bash/</loc>
     </url>
     <url>
-        <loc>http://127.0.0.1:1111/week-08-linux-notes/</loc>
+        <loc>https://vloneskorpion.github.io/webpage/week-08-linux-notes/</loc>
         <lastmod>2024-11-01</lastmod>
     </url>
 </urlset>
