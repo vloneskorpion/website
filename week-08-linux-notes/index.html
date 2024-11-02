@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>mogggx&#x27;s blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="http://127.0.0.1:1111/style.css">
+    <link rel="stylesheet" href="http://127.0.0.1:1111/color/orange.css">
+
+        <link rel="stylesheet" href="http://127.0.0.1:1111/color/background_blue.css">
+    
+    <link rel="stylesheet" href="http://127.0.0.1:1111/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="mogggx's blog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://127.0.0.1:1111/week-08-linux-notes/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="mogggx's blog">
+    <meta property="twitter:domain" content="http:&#x2F;&#x2F;127.0.0.1:1111">
+    <meta property="twitter:url" content="http://127.0.0.1:1111/week-08-linux-notes/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="http://127.0.0.1:1111" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            mogggx.dev
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="http://127.0.0.1:1111">blog</a></li>
+            
+                <li><a href="http://127.0.0.1:1111/tags">tags</a></li>
+            
+                <li><a href="http://127.0.0.1:1111/archive">archive</a></li>
+            
+                <li><a href="http://127.0.0.1:1111/about">about me</a></li>
+            
+                <li><a href="https://github.com/vloneskorpion" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="http://127.0.0.1:1111/week-08-linux-notes/">Bash guide</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-11-01
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="http://127.0.0.1:1111/tags/bash/">#bash</a></span>
+    
+
+        <div class="post-content">
+            <p>TEST</p>
+<span id="continue-reading"></span><pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#39bae6;">!! </span><span style="font-style:italic;color:#5c6773;"># execute previous command
+</span><span>
+</span><span>
+</span><span>!</span><span style="color:#ffb454;">n </span><span style="font-style:italic;color:#5c6773;"># executes the command at the history from the position n
+</span><span>
+</span><span>
+</span><span>!</span><span style="color:#ffb454;">-n </span><span style="font-style:italic;color:#5c6773;"># executes command from n commands ago
+</span><span>
+</span><span>
+</span><span>!</span><span style="color:#ffb454;">string </span><span style="font-style:italic;color:#5c6773;"># executes the last command starting with string
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;"># EXAMPLE
+</span><span>!</span><span style="color:#ffb454;">ls
+</span><span>
+</span><span style="color:#ffb454;">^old^new </span><span style="font-style:italic;color:#5c6773;"># replaces the first occurance of old with new in the previous command and executes it
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;"># EXAMPLE
+</span><span style="color:#ffb454;">ls</span><span style="color:#f29718;"> -la
+</span><span style="color:#ffb454;">^la^l
+</span><span style="font-style:italic;color:#5c6773;"># ls -l will be executed
+</span><span>
+</span><span style="color:#f07178;">echo </span><span>$0 </span><span style="font-style:italic;color:#5c6773;"># name of the script
+</span><span style="color:#f07178;">echo </span><span>$num </span><span style="font-style:italic;color:#5c6773;"># positional parameters, representing args passed to script eg. $1
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;"># </span><span style="font-style:italic;color:#5c6773;"># the number of positional parameters
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">@ </span><span style="font-style:italic;color:#5c6773;"># all positional parameters as separated quoted arguments
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">* </span><span style="font-style:italic;color:#5c6773;"># all positional parameters as a single string
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">? </span><span style="font-style:italic;color:#5c6773;"># exit status of last command executed (0 is successful)
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">$ </span><span style="font-style:italic;color:#5c6773;"># the process id of current shell
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">! </span><span style="font-style:italic;color:#5c6773;"># the process id of the last background command
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">_ </span><span style="font-style:italic;color:#5c6773;"># the last argument from previous EXECUTED command
+</span><span style="color:#f07178;">echo</span><span> !$ </span><span style="font-style:italic;color:#5c6773;"># the last argument from previous command (from history), it is short for !!:$ and not eq of $_
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;"># EXAMPLE
+</span><span>
+</span><span style="color:#ffb454;">$</span><span> if true</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">then </span><span style="color:#f07178;">echo</span><span> one</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">else </span><span style="color:#f07178;">echo</span><span> two</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">fi
+</span><span style="color:#ffb454;">one
+</span><span style="color:#ffb454;">$</span><span> echo </span><span style="color:#c2d94c;">&quot;$</span><span style="font-style:italic;color:#39bae6;">_</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ffb454;">one
+</span><span style="color:#ffb454;">$</span><span> if true</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">then </span><span style="color:#f07178;">echo</span><span> one</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">else </span><span style="color:#f07178;">echo</span><span> two</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">fi
+</span><span style="color:#ffb454;">$</span><span> echo !$
+</span><span style="color:#ffb454;">$</span><span> echo fi
+</span><span>
+</span><span style="color:#f29668;">&amp;&amp; </span><span style="font-style:italic;color:#5c6773;"># runs next command only if previous succeeds
+</span><span style="color:#f29668;">|| </span><span style="font-style:italic;color:#5c6773;"># runs next command only if previous fails
+</span><span style="color:#f29668;">; </span><span style="font-style:italic;color:#5c6773;"># separates multiple commands to run sequentially
+</span><span>
+</span><span>
+</span></code></pre>
+
+        </div>
+
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ mogggx</span>
+                    </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
