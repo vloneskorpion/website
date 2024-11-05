@@ -17,6 +17,10 @@
         <loc>https://knowak.dev/page/1/</loc>
     </url>
     <url>
+        <loc>https://knowak.dev/proxmox-disk-on-host/</loc>
+        <lastmod>2024-11-05</lastmod>
+    </url>
+    <url>
         <loc>https://knowak.dev/tags/</loc>
     </url>
     <url>
@@ -27,5 +31,8 @@
     </url>
     <url>
         <loc>https://knowak.dev/tags/linux/</loc>
+    </url>
+    <url>
+        <loc>https://knowak.dev/tags/proxmox/</loc>
     </url>
 </urlset>
