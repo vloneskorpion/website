@@ -97,64 +97,19 @@
     
 
 
-                    <div class="post-content">
-            <span id="continue-reading"></span>
-<p>Recently I could not connect to my proxmox virtual machine on which I had some important files for my project. In this tutorial I will show how to easily mount a disk from a proxmox virtual machine and access its data.</p>
-<ol>
-<li>Find your .qcow2 disk image file which you would like to mount. They are located usually under <code>/var/lib/vz/images</code> folder.</li>
-</ol>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> ls /var/lib/vz/images/</span><span style="color:#f29668;">*
-</span><span style="color:#ffb454;">/var/lib/vz/images/100:
-</span><span style="color:#ffb454;">vm-100-disk-0.qcow2</span><span>  vm-100-disk-1.qcow2
-</span><span>
-</span><span style="color:#ffb454;">/var/lib/vz/images/101:
-</span><span style="color:#ffb454;">vm-101-disk-0.qcow2</span><span>  vm-101-disk-1.qcow2
-</span><span>
-</span><span style="color:#ffb454;">/var/lib/vz/images/106:
-</span><span style="color:#ffb454;">vm-106-disk-0.qcow2</span><span>  vm-106-disk-1.qcow</span><span style="color:#f29718;">2</span><span style="color:#f29668;">&gt;</span><span>)
-</span></code></pre>
-<ol start="2">
-<li>Ensure that nbd module is loaded into kernel.</li>
-</ol>
-<p>The nbd kernel module stands for Network Block Device. It allows you to treat a file like a .qcow2 disk image as if it was a local disk represented by block devices like <code>/dev/nbd*</code>. </p>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> modprobe nbd max_part=8
-</span></code></pre>
-<ol start="3">
-<li>Use qemu-nbd to attach the .qcow2 disk image to an NBD device.</li>
-</ol>
-<p>qemu-nbd is a tool from the <strong>QEMU</strong> suite that allows disk images (such as .qcow2 files) to be attached to the host’s NBD system, making them accessible as block devices like in this example <code>/dev/nbd0</code>.</p>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">qemu-nbd</span><span style="color:#f29718;"> --connect</span><span style="color:#f29668;">=</span><span>/dev/nbd0 /var/lib/vz/images/100/vm-100-disk-0.qcow2
-</span></code></pre>
-<ol start="4">
-<li>Identify partitions on the disk.</li>
-</ol>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">fdisk</span><span style="color:#f29718;"> -l</span><span> /dev/nbd0
-</span><span>
-</span><span style="color:#ffb454;">Device</span><span>         Start      End  Sectors  Size Type
-</span><span style="color:#ffb454;">/dev/nbd0p1</span><span>     2048  1050623  1048576  512M EFI System
-</span><span style="color:#ffb454;">/dev/nbd0p2</span><span>  1050624 65107967 64057344 30.5G Linux filesystem
-</span><span style="color:#ffb454;">/dev/nbd0p3</span><span> 65107968 67106815  1998848  976M Linux swap
-</span></code></pre>
-<ol start="5">
-<li>Mount the partition in which you are interested in. In my case it was <code>/dev/nbd0p2</code>.</li>
-</ol>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">mkdir</span><span style="color:#f29718;"> -p</span><span> /mnt/data
-</span><span style="color:#ffb454;">mount</span><span> /dev/nbd0p2 /mnt/data
-</span></code></pre>
-<ol start="6">
-<li>You can now navigate to <code>/mnt/data</code> to access the files on the .qcow2 disk.</li>
-</ol>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f07178;">cd</span><span> /mnt/data
-</span></code></pre>
-<ol start="7">
-<li>After accessing the data, unmount the partition and disconnect the NBD device.</li>
-</ol>
-<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">umount</span><span> /mnt/data
-</span><span style="color:#ffb454;">qemu-nbd</span><span style="color:#f29718;"> --disconnect</span><span> /dev/nbd0
-</span></code></pre>
-<p>That's all! As you see it's so easy to access .qcow2 disk images from a host. Hope that helped you!</p>
+                    
+        <div class="post-content">
+            <p>Recently I could not connect to my proxmox virtual machine on which I had some important files for my project. In this tutorial I will show how to easily mount a disk from a proxmox virtual machine and access its data.</p>
 
         </div>
+        <div>
+            <!-- &#xFE0E; -- force text style - some devices render this as emoji -->
+            <a class="read-more button" href="https://knowak.dev/proxmox-disk-on-host/">
+                <span class="button__text">Read more</span>&nbsp;
+                <span class="button__icon">&#8617;&#xFE0E;</span>
+            </a>
+        </div>
+    
 
                 </div>
             
