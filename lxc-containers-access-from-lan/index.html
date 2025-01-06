@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Devops&#x2F;Programming blog - Kamil Nowak</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://knowak.dev/style.css">
+    <link rel="stylesheet" href="https://knowak.dev/color/orange.css">
+
+        <link rel="stylesheet" href="https://knowak.dev/color/background_blue.css">
+    
+    <link rel="stylesheet" href="https://knowak.dev/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://knowak.dev/lxc-containers-access-from-lan/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="twitter:domain" content="knowak.dev">
+    <meta property="twitter:url" content="https://knowak.dev/lxc-containers-access-from-lan/">
+
+    </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M41S9J7JLB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M41S9J7JLB');
+</script>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://knowak.dev" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            knowak.dev
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://knowak.dev">blog</a></li>
+            
+                <li><a href="https://knowak.dev/tags">tags</a></li>
+            
+                <li><a href="https://knowak.dev/archive">archive</a></li>
+            
+                <li><a href="https://knowak.dev/about">about me/contact</a></li>
+            
+                <li><a href="https://github.com/vloneskorpion" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://knowak.dev/lxc-containers-access-from-lan/">How to access LXC container from LAN?</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2025-01-06
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/containers/">#containers</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/devops/">#devops</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/linux/">#linux</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/lxc/">#lxc</a></span>
+    
+
+        <div class="post-content">
+            <p>In this part I will shortly show how we can access LXC container from our local network using as Debian VM as host.</p>
+<span id="continue-reading"></span>
+<p>This post is continuation of the previous one. <a href="https://knowak.dev/lxc-containers-overview-on-debian-host/">Check it here.</a> I encourage you to read its contents first.</p>
+<h3 id="how-to-access-lxc-container-from-lan">How to access LXC container from LAN?</h3>
+<p>Via <code>sudo lxc list</code> we can see that our container from previous post is running and has IPV4 assigned. However it can't be reached outside our host. In order to make it able to connect from other hosts in LAN we need to configure bridge.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_6.png" class="center" decoding="async" loading="lazy"/>
+
+<p>I'm running this setup on Debian host, so instructions included in this post will be Debian related. However it should be almost the same on Ubuntu host.</p>
+<p>Firstly we need to find name of our physical interface.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_7.png" class="center" decoding="async" loading="lazy"/>
+
+<p>In my case it's <strong>enp0s11</strong>. We can proceed then with creating network config file:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> vi /etc/network/interfaces.d/br0
+</span></code></pre>
+<p>Copy following config lines and paste it into <code>br0</code> file.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">auto</span><span> br0
+</span><span>
+</span><span style="color:#ffb454;">iface</span><span> br0 inet dhcp
+</span><span style="color:#ffb454;">bridge_ports</span><span> enp0s11
+</span></code></pre>
+<p>We are using DHCP here. Sample configuration files for bridge interfaces with static ip addr can be found on the internet.</p>
+<p>Save the file and then restart networking service via systemctl.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> systemctl restart networking
+</span></code></pre>
+<p>We can see that our bridge is UP:</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_8.png" class="center" decoding="async" loading="lazy"/>
+
+<p>Now let's assign it to the container. It can be done via following command:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc config device add container1 eth0 nic nictype=bridged parent=br0 name=eth0
+</span></code></pre>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_9.png" class="center" decoding="async" loading="lazy"/>
+
+<p>We can see that our IPV4 changed.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_10.png" class="center" decoding="async" loading="lazy"/>
+
+<p>Now our container is reachable from LAN and not only from host.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_11.png" class="center" decoding="async" loading="lazy"/>
+
+<p>Hope this post helped you to configure your containers to be accessible from LAN :)</p>
+
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                    <hr />
+                </div>
+                <div class="pagination__buttons">
+                        <span class="button previous">
+                            <a href="https://knowak.dev/lxc-containers-overview-on-debian-host/">
+                                <span class="button__icon">←</span>&nbsp;
+                                <span class="button__text">LXC containers overview on Debian host</span>
+                            </a>
+                        </span>
+                    
+                    </div>
+            </div>
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ knowak</span>
+                    </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

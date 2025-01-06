@@ -14,6 +14,14 @@
         <lastmod>2024-11-03</lastmod>
     </url>
     <url>
+        <loc>https://knowak.dev/lxc-containers-access-from-lan/</loc>
+        <lastmod>2025-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://knowak.dev/lxc-containers-overview-on-debian-host/</loc>
+        <lastmod>2025-01-04</lastmod>
+    </url>
+    <url>
         <loc>https://knowak.dev/page/1/</loc>
     </url>
     <url>
@@ -27,10 +35,16 @@
         <loc>https://knowak.dev/tags/bash/</loc>
     </url>
     <url>
+        <loc>https://knowak.dev/tags/containers/</loc>
+    </url>
+    <url>
         <loc>https://knowak.dev/tags/devops/</loc>
     </url>
     <url>
         <loc>https://knowak.dev/tags/linux/</loc>
+    </url>
+    <url>
+        <loc>https://knowak.dev/tags/lxc/</loc>
     </url>
     <url>
         <loc>https://knowak.dev/tags/proxmox/</loc>
