@@ -22,6 +22,10 @@
         <lastmod>2025-01-04</lastmod>
     </url>
     <url>
+        <loc>https://knowak.dev/nginx-caching-server/</loc>
+        <lastmod>2025-01-11</lastmod>
+    </url>
+    <url>
         <loc>https://knowak.dev/page/1/</loc>
     </url>
     <url>
@@ -35,6 +39,9 @@
         <loc>https://knowak.dev/tags/bash/</loc>
     </url>
     <url>
+        <loc>https://knowak.dev/tags/caching-server/</loc>
+    </url>
+    <url>
         <loc>https://knowak.dev/tags/containers/</loc>
     </url>
     <url>
@@ -45,6 +52,9 @@
     </url>
     <url>
         <loc>https://knowak.dev/tags/lxc/</loc>
+    </url>
+    <url>
+        <loc>https://knowak.dev/tags/nginx/</loc>
     </url>
     <url>
         <loc>https://knowak.dev/tags/proxmox/</loc>
