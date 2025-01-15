@@ -102,9 +102,10 @@
     
 
         <div class="post-content">
-            <p>In this tutorial, we’ll explore the caching functionality of Nginx by creating a simple caching server. By following the steps below, you can set up your own environment to cache responses using Nginx.</p>
+            <p>In this tutorial, we’ll explore the caching functionality of nginx by creating a simple caching server. By following the steps below, you can set up your own environment to cache responses using nginx.</p>
+<p>For those who don't know what nginx is - a high-performance, open-source web server that’s also frequently used as a reverse proxy, load balancer, and content cache. It was designed to handle large numbers of concurrent connections efficiently, often making it a go-to choice for high-traffic websites. </p>
 <span id="continue-reading"></span>
-<p>First, install Nginx if you haven’t already:</p>
+<p>First, install nginx if you haven’t already:</p>
 <pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> apt install nginx
 </span></code></pre>
 <p>Then enable and start it via systemd:</p>
@@ -114,7 +115,7 @@
 <pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> mkdir</span><span style="color:#f29718;"> -p</span><span> /var/cache/nginx
 </span><span style="color:#ffb454;">sudo</span><span> chmod 700 /var/cache/nginx
 </span></code></pre>
-<p>Open the main Nginx configuration file <code>/etc/nginx/nginx.conf</code> in your favourite editor. Replace the existing http { ... } block with the following:</p>
+<p>Open the main nginx configuration file <code>/etc/nginx/nginx.conf</code> in your favourite editor. Replace the existing http { ... } block with the following:</p>
 <pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">http </span><span>{
 </span><span>    proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m use_temp_path=off;
 </span><span>	
@@ -216,7 +217,7 @@
   <img src="https://knowak.dev/images/nginx_caching_server/20250110183455.png" class="center" decoding="async" loading="lazy"/>
 
 <p>As you can see our cache exists in disk memory.</p>
-<p>That’s it! By following these steps, you’ve set up a simple Nginx caching server and learned how to inspect whether responses are coming from cache. You can adapt these settings to fit your production environment or further explore advanced caching features like cache purging or conditional caching.</p>
+<p>That’s it! By following these steps, you’ve set up a simple nginx caching server and learned how to inspect whether responses are coming from cache. You can adapt these settings to fit your production environment or further explore advanced caching features like cache purging or conditional caching.</p>
 
         </div>
 
