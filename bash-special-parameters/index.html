@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Devops&#x2F;Programming blog - Kamil Nowak</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://knowak.dev/style.css">
+    <link rel="stylesheet" href="https://knowak.dev/color/orange.css">
+
+        <link rel="stylesheet" href="https://knowak.dev/color/background_blue.css">
+    
+    <link rel="stylesheet" href="https://knowak.dev/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://knowak.dev/bash-special-parameters/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="twitter:domain" content="knowak.dev">
+    <meta property="twitter:url" content="https://knowak.dev/bash-special-parameters/">
+
+    </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M41S9J7JLB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M41S9J7JLB');
+</script>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://knowak.dev" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            knowak.dev
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://knowak.dev">blog</a></li>
+            
+                <li><a href="https://knowak.dev/tags">tags</a></li>
+            
+                <li><a href="https://knowak.dev/archive">archive</a></li>
+            
+                <li><a href="https://knowak.dev/about">about me/contact</a></li>
+            
+                <li><a href="https://github.com/vloneskorpion" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://knowak.dev/bash-special-parameters/">Special Parameters in Bash</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-11-03
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/bash/">#bash</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/devops/">#devops</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/linux/">#linux</a></span>
+    
+
+        <div class="post-content">
+            <p>Have you ever wondered how to get Process ID of the last background process? Or how to print PID of the current shell? Today, we’ll cover special parameters in Bash that can help you work with scripts more effectively.</p>
+<span id="continue-reading"></span><h4 id="what-are-special-parameters">What are special parameters?</h4>
+<p>First of all what are special parameters in bash?
+These are predefined variables that provide information about script's execution environment, process management and arguments. These parameters are denoted with special symbols (like <code>$$</code>, <code>$!</code>, <code>$?</code>) and have unique purposes making them essential for scripting.</p>
+<p>The best way to learn bash is to work with live examples. In this part I will try to present the most useful special parameters with a description and, of course, examples so that you can test for yourself how it works.</p>
+<h3 id="0">$0</h3>
+<p>The first useful expansion parameter is <code>$0</code>, which represents the name of the script or shell currently being executed. Create a file for example <code>print_name.sh</code> and paste following snipped into this file via your favourite text editor to verify that.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> touch print_name.sh
+</span><span style="color:#ffb454;">$</span><span> vi print_name.sh
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># print_name.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span style="color:#f07178;">echo </span><span>$0
+</span></code></pre>
+<p>Don't forget to make script executable.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> chmod +x print_name.sh
+</span></code></pre>
+<p>We can now verify usage of <code>$0</code>.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./print_name.sh
+</span><span style="color:#ffb454;">./print_name.sh
+</span></code></pre>
+<h3 id="1-2-3">$1, $2, $3 ...</h3>
+<p><code>$1, $2, $3 ...</code> are positional parameters that represent the arguments passed to script or function. Each number corresponds to an argument based on its order.</p>
+<p>Let's modify our <code>print_name.sh</code> and add following lines to the end.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f07178;">echo </span><span>$1
+</span><span style="color:#f07178;">echo </span><span>$2
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># print_name.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span style="color:#f07178;">echo </span><span>$0
+</span><span>
+</span><span style="color:#f07178;">echo </span><span>$1
+</span><span style="color:#f07178;">echo </span><span>$2
+</span></code></pre>
+<p>We can pass now arguments to our script and print them. Let's run our script again and see the output.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./print_name.sh arg1 arg2
+</span><span style="color:#ffb454;">./print_name.sh
+</span><span style="color:#ffb454;">arg1
+</span><span style="color:#ffb454;">arg2
+</span></code></pre>
+<h3 id="">$#</h3>
+<p><code>$#</code> represents total number of positional parameters passed to our script or function. It is commonly used to check how many arguments did user provide to script.</p>
+<p>Let's add <code>echo $#</code> command to the end of our <code>print_names.sh</code> script.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># print_name.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span style="color:#f07178;">echo </span><span>$0
+</span><span>
+</span><span style="color:#f07178;">echo </span><span>$1
+</span><span style="color:#f07178;">echo </span><span>$2
+</span><span style="color:#f07178;">echo </span><span>$</span><span style="font-style:italic;color:#39bae6;">#
+</span></code></pre>
+<p>If we pass 3 arguments to our script number <code>3</code> should be printed. Let's verify that.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./print_name.sh arg1 arg2 arg3
+</span><span style="color:#ffb454;">./print_name.sh
+</span><span style="color:#ffb454;">arg1
+</span><span style="color:#ffb454;">arg2
+</span><span style="color:#ffb454;">3
+</span></code></pre>
+<h3 id="and">$@ and $*</h3>
+<p><code>$@</code> - represents all positional parameters passed to a script or function, treating each argument as a separate entity.</p>
+<p><code>$*</code> - represents all positional parameters passed to a script or function as single, combined string. By default it joins arguments using the first character of the IFS (Internal Field Separator), which is usually a space. We will cover example to show how it behaves with custom IFS later.</p>
+<p>For these parameters we will use another example. Let's create file named <code>all_parameters.sh</code>. We will use simple for loops to iterate over passed argument and check how <code>$@</code> differs from <code>$*</code>. Note that this example uses default IFS. Which can be checked in a human-readable way by following command.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> printf </span><span style="color:#c2d94c;">&#39;%q\n&#39; &quot;$</span><span>IFS</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#c2d94c;">$&#39; </span><span style="color:#95e6cb;">\t\n</span><span style="color:#c2d94c;">&#39;
+</span></code></pre>
+<p>We can see that our default IFS consists of space, tab and new line.</p>
+<p>Let's go back to our example.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> touch all_parameters.sh
+</span><span style="color:#ffb454;">$</span><span> vi all_parameters.sh
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># all_parameters.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span>
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Using </span><span style="color:#95e6cb;">\$</span><span style="color:#c2d94c;">@:&quot;
+</span><span style="color:#ff7733;">for</span><span> arg </span><span style="color:#ff7733;">in </span><span style="color:#c2d94c;">&quot;$</span><span style="font-style:italic;color:#39bae6;">@</span><span style="color:#c2d94c;">&quot;</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;$</span><span>arg</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ff7733;">done
+</span><span>
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Using </span><span style="color:#95e6cb;">\$</span><span style="color:#c2d94c;">*:&quot;
+</span><span style="color:#ff7733;">for</span><span> arg </span><span style="color:#ff7733;">in </span><span style="color:#c2d94c;">&quot;$</span><span style="font-style:italic;color:#39bae6;">*</span><span style="color:#c2d94c;">&quot;</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;$</span><span>arg</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ff7733;">done
+</span></code></pre>
+<p>Again - don't forget to make script executable.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> chmod +x all_parameters.sh
+</span></code></pre>
+<p>Let's check output of our <code>all_parameters.sh</code> script, by providing some arguments.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./all_parameters.sh arg1 arg2 with spaces arg3
+</span><span style="color:#ffb454;">Using </span><span>$</span><span style="font-style:italic;color:#39bae6;">@</span><span>:
+</span><span style="color:#ffb454;">arg1
+</span><span style="color:#ffb454;">arg2
+</span><span style="color:#ffb454;">with
+</span><span style="color:#ffb454;">spaces
+</span><span style="color:#ffb454;">arg3
+</span><span style="color:#ffb454;">Using </span><span>$</span><span style="font-style:italic;color:#39bae6;">*</span><span>:
+</span><span style="color:#ffb454;">arg1</span><span> arg2 with spaces arg3
+</span></code></pre>
+<p>As we can see, <code>$@</code> preserves each argument as a separate string, while <code>$*</code> combines all arguments into a single string, separated by the first character of IFS, which may not always be ideal if spaces are involved and we use default IFS.</p>
+<p>But how does it act when we set custom IFS? Let's check it. We will modify our <code>all_parameters.sh</code> script by providing custom IFS at the top.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># all_parameters.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span>IFS</span><span style="color:#f29668;">=</span><span style="color:#c2d94c;">&#39;,&#39;
+</span><span>
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Using </span><span style="color:#95e6cb;">\$</span><span style="color:#c2d94c;">@:&quot;
+</span><span style="color:#ff7733;">for</span><span> arg </span><span style="color:#ff7733;">in </span><span style="color:#c2d94c;">&quot;$</span><span style="font-style:italic;color:#39bae6;">@</span><span style="color:#c2d94c;">&quot;</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;$</span><span>arg</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ff7733;">done
+</span><span>
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Using </span><span style="color:#95e6cb;">\$</span><span style="color:#c2d94c;">*:&quot;
+</span><span style="color:#ff7733;">for</span><span> arg </span><span style="color:#ff7733;">in </span><span style="color:#c2d94c;">&quot;$</span><span style="font-style:italic;color:#39bae6;">*</span><span style="color:#c2d94c;">&quot;</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;$</span><span>arg</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ff7733;">done
+</span></code></pre>
+<p>Using the same arguments we get following output.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./all_parameters.sh arg1 arg2 with spaces arg3
+</span><span style="color:#ffb454;">Using </span><span>$</span><span style="font-style:italic;color:#39bae6;">@</span><span>:
+</span><span style="color:#ffb454;">arg1
+</span><span style="color:#ffb454;">arg2
+</span><span style="color:#ffb454;">with
+</span><span style="color:#ffb454;">spaces
+</span><span style="color:#ffb454;">arg3
+</span><span style="color:#ffb454;">Using </span><span>$</span><span style="font-style:italic;color:#39bae6;">*</span><span>:
+</span><span style="color:#ffb454;">arg1,arg2,with,spaces,arg3
+</span></code></pre>
+<p>Now we can see that by using <code>$*</code> arguments are joined by <code>,</code>, which might be more useful than space.</p>
+<h3 id="and-1">$$ and $!</h3>
+<p><code>$$</code> represents the PID (Process ID) of the current shell or script that is running.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> echo $</span><span style="font-style:italic;color:#39bae6;">$
+</span><span style="color:#ffb454;">61730
+</span></code></pre>
+<p>It can be used for various purposes, for example we can create a script that will create temporary file and ensure the file name will not collide with other names if this script was run in parallel. Let's create script <code>uniq_name.sh</code> and make it executable.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> touch uniq_name.sh
+</span><span style="color:#ffb454;">$</span><span> chmod +x uniq_name.sh
+</span><span style="color:#ffb454;">$</span><span> vi uniq_name.sh
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># uniq_name.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span>
+</span><span style="color:#ffb454;">sleep</span><span> 2
+</span><span>
+</span><span>temp_file</span><span style="color:#f29668;">=</span><span style="color:#c2d94c;">&quot;./tempfile_$</span><span style="font-style:italic;color:#39bae6;">$</span><span style="color:#c2d94c;">.txt&quot;
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Creating temporary file: $</span><span>temp_file</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Temporary data&quot; </span><span style="color:#f29668;">&gt; </span><span style="color:#c2d94c;">&quot;$</span><span>temp_file</span><span style="color:#c2d94c;">&quot;
+</span><span style="color:#ffb454;">cat </span><span style="color:#c2d94c;">&quot;$</span><span>temp_file</span><span style="color:#c2d94c;">&quot;
+</span><span>
+</span></code></pre>
+<p>We are going to run 3 instances of that script in parallel to see if it works.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ff7733;">for</span><span> i </span><span style="color:#ff7733;">in </span><span>{1..3}</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do </span><span style="color:#ffb454;">./uniq_name.sh </span><span style="color:#f29668;">&amp; </span><span style="color:#ff7733;">done
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">Creating</span><span> temporary file: ./tempfile_62561.txt
+</span><span style="color:#ffb454;">Temporary</span><span> data
+</span><span style="color:#ffb454;">Creating</span><span> temporary file: ./tempfile_62563.txt
+</span><span style="color:#ffb454;">Temporary</span><span> data
+</span><span style="color:#ffb454;">Creating</span><span> temporary file: ./tempfile_62562.txt
+</span><span style="color:#ffb454;">Temporary</span><span> data
+</span></code></pre>
+<p>As we can see names of the files are unique.</p>
+<p><code>$!</code> on the other hand represents PID of the last command run in the background. When starting command in the background by appending &amp; to it <code>$!</code> holds the PID of that background process.</p>
+<p>It can be checked by executing following commands. By using <code>$!</code> we can wait for background command to finish its execution.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sleep</span><span> 5 </span><span style="color:#f29668;">&amp;
+</span><span>background_pid</span><span style="color:#f29668;">=</span><span style="color:#c2d94c;">$</span><span style="font-style:italic;color:#39bae6;">!
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Waiting for job with PID $</span><span>background_pid</span><span style="color:#c2d94c;"> to finish...&quot;
+</span><span style="color:#f07178;">wait </span><span>$background_pid
+</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;Job completed.&quot;
+</span></code></pre>
+<h3 id="-1">$?</h3>
+<p><code>$?</code> hold the exit status of the last command that was executed. By using <code>$?</code> it can be verified if previous command ran successfully or encountered an error.</p>
+<p>If <code>$?</code> returns 0, it indicates that the last command succeeded; any other value means that the command encountered an error.</p>
+<p>Let's create a simple script <code>status.sh</code> which will check if previous command succeeded or not.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> touch status.sh
+</span><span style="color:#ffb454;">$</span><span> chmod +x status.sh
+</span><span style="color:#ffb454;">$</span><span> vi status.sh
+</span></code></pre>
+<p>We will compare exit status to <code>0</code> using <code>[ $? -eq 0 ]</code> test functionality.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#5c6773;"># status.sh
+</span><span>
+</span><span style="font-style:italic;color:#5c6773;">#!/bin/bash
+</span><span>
+</span><span>filename</span><span style="color:#f29668;">=</span><span style="color:#c2d94c;">$</span><span>1
+</span><span>
+</span><span style="color:#ffb454;">ls </span><span style="color:#c2d94c;">&quot;$</span><span>filename</span><span style="color:#c2d94c;">&quot;
+</span><span>
+</span><span style="color:#ff7733;">if </span><span style="color:#f07178;">[ </span><span>$</span><span style="font-style:italic;color:#39bae6;">? </span><span style="color:#f29718;">-eq</span><span> 0 </span><span style="color:#f07178;">]</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">then
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;File exists!&quot;
+</span><span style="color:#ff7733;">else
+</span><span>	</span><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;File doesn&#39;t exist.&quot;
+</span><span style="color:#ff7733;">fi
+</span></code></pre>
+<p>Now lets run our script and provide as an argument filename that doesn't exist.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$</span><span> ./status.sh test
+</span><span style="color:#ffb454;">ls:</span><span> cannot access </span><span style="color:#c2d94c;">&#39;test&#39;</span><span>: No such file or directory
+</span><span style="color:#ffb454;">File</span><span> doesn</span><span style="color:#c2d94c;">&#39;t exist.
+</span></code></pre>
+<p>As we can see ls command returned non-zero output. Now let's create file <code>test</code> and see what happens.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">$ </span><span style="color:#f29668;">&gt;</span><span> test
+</span><span style="color:#ffb454;">$</span><span> ./status.sh test
+</span><span style="color:#ffb454;">test
+</span><span style="color:#ffb454;">File</span><span> exists!
+</span></code></pre>
+<h4 id="summary">Summary</h4>
+<p>Bash special parameters, like <code>$0</code>, <code>$#</code>, <code>$@,</code> <code>$?</code>, and <code>$!</code>, provide powerful tools for script control and flexibility. Understanding these parameters allows you to access command-line arguments, track process IDs, and manage command outcomes, making it easier to handle complex scripting tasks. By mastering these parameters, you can write more robust and dynamic scripts, automate tasks with precision, and improve error handling. Experimenting with these parameters in your own scripts will deepen your understanding and enhance your efficiency as a Bash user.</p>
+
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                    <hr />
+                </div>
+                <div class="pagination__buttons">
+                    
+                        <span class="button next">
+                            <a href="https://knowak.dev/proxmox-disk-on-host/">
+                                <span class="button__text">How to access proxmox disk image file on host?</span>&nbsp;
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    </div>
+            </div>
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ knowak</span>
+                    </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

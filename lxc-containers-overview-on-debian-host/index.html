@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Devops&#x2F;Programming blog - Kamil Nowak</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://knowak.dev/style.css">
+    <link rel="stylesheet" href="https://knowak.dev/color/orange.css">
+
+        <link rel="stylesheet" href="https://knowak.dev/color/background_blue.css">
+    
+    <link rel="stylesheet" href="https://knowak.dev/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://knowak.dev/lxc-containers-overview-on-debian-host/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="twitter:domain" content="knowak.dev">
+    <meta property="twitter:url" content="https://knowak.dev/lxc-containers-overview-on-debian-host/">
+
+    </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M41S9J7JLB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M41S9J7JLB');
+</script>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://knowak.dev" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            knowak.dev
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://knowak.dev">blog</a></li>
+            
+                <li><a href="https://knowak.dev/tags">tags</a></li>
+            
+                <li><a href="https://knowak.dev/archive">archive</a></li>
+            
+                <li><a href="https://knowak.dev/about">about me/contact</a></li>
+            
+                <li><a href="https://github.com/vloneskorpion" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://knowak.dev/lxc-containers-overview-on-debian-host/">LXC containers overview on Debian host</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2025-01-04
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/containers/">#containers</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/devops/">#devops</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/linux/">#linux</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/lxc/">#lxc</a></span>
+    
+
+        <div class="post-content">
+            <p>In this post I will shortly introduce LXC containers, why they can be useful and their basic usage on Debian host.</p>
+<span id="continue-reading"></span>
+<p>Why to use LXC containers? The core concept of LXC containers is to provide lightweight alternative to virtual machines. While Docker containers purpose is to containerize an application in isolated environment, LXC containers role is to containerize linux operating system. </p>
+<h3 id="installation">Installation</h3>
+<p>Prerequisites and installation steps can be checked on the official LXC page:
+<a href="https://linuxcontainers.org/lxc/getting-started/">Click here.</a></p>
+<p>I'm using Debian VM, so in my case it will be:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> apt install lxc
+</span><span style="color:#ffb454;">sudo</span><span> apt install lxd
+</span></code></pre>
+<p>lxd (Linux Container Daemon) package provides more user-friendly interface and has some additional features for managing LXC conateiners, so we will install it also.</p>
+<h3 id="setup-and-basic-usage">Setup and basic usage</h3>
+<p>In order to init lxd daemon run following command:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxd init
+</span></code></pre>
+<p>For this example I accepted all default settings:</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_1.png" class="center" decoding="async" loading="lazy"/>
+
+<p>Now we can list all created containers (which will be empty list at that point).</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc list
+</span></code></pre>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_2.png" class="center" decoding="async" loading="lazy"/>
+
+<p>Let's create and start <strong>ubuntu 22.04</strong> image container with name <strong>container1</strong> (if you want to create it, but not start use <strong>init</strong> option instead of <strong>launch</strong>).</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc launch ubuntu:22.04 container1
+</span></code></pre>
+<p>After pulling image if everything goes well we should see <strong>container1</strong> running.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_3.png" class="center" decoding="async" loading="lazy"/>
+
+<p>To execute any command inside the container simply run:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc exec container1 </span><span style="color:#f29668;">&lt;</span><span>command</span><span style="color:#f29668;">&gt;
+</span></code></pre>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_4.png" class="center" decoding="async" loading="lazy"/>
+
+<p>To get container's bash shell we can execute following command:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc exec container1 bash
+</span></code></pre>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/lxc_containers/lxc_containers_overview_on_debian_host_image_5.png" class="center" decoding="async" loading="lazy"/>
+
+<p>If we wanted to start, stop, delete, pause (send SIGSTOP signal to all container processes) or clone (copy) container we can run following commands:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc start container1
+</span><span style="color:#ffb454;">sudo</span><span> lxc stop container1
+</span><span style="color:#ffb454;">sudo</span><span> lxc delete container1
+</span><span style="color:#ffb454;">sudo</span><span> lxc pause container1
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc copy container1 container2
+</span></code></pre>
+<p>Another useful utility is the possibility to pull or push files from host from/into the container. In order to push any file (testfile in this case) use following command:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc file push testfile container1/tmp/testfile
+</span></code></pre>
+<p>In order to pull testfile back use:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc file pull container1/tmp/testfile testfile
+</span></code></pre>
+<p>We can also check info about the container by using:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> lxc info container1
+</span></code></pre>
+<p>It can be useful in debugging to gather info about configuration.</p>
+<p>That's all for this post, I hope you learnt something useful. In next one I will show how to access LXC container from our local network, because for now we can access our container only from the next machine.</p>
+
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                    <hr />
+                </div>
+                <div class="pagination__buttons">
+                        <span class="button previous">
+                            <a href="https://knowak.dev/proxmox-disk-on-host/">
+                                <span class="button__icon">←</span>&nbsp;
+                                <span class="button__text">How to access proxmox disk image file on host?</span>
+                            </a>
+                        </span>
+                    
+                    
+                        <span class="button next">
+                            <a href="https://knowak.dev/lxc-containers-access-from-lan/">
+                                <span class="button__text">How to access LXC container from LAN?</span>&nbsp;
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    </div>
+            </div>
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ knowak</span>
+                    </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Devops&#x2F;Programming blog - Kamil Nowak</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://knowak.dev/style.css">
+    <link rel="stylesheet" href="https://knowak.dev/color/orange.css">
+
+        <link rel="stylesheet" href="https://knowak.dev/color/background_blue.css">
+    
+    <link rel="stylesheet" href="https://knowak.dev/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://knowak.dev/nginx-caching-server/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Devops/Programming blog - Kamil Nowak">
+    <meta property="twitter:domain" content="knowak.dev">
+    <meta property="twitter:url" content="https://knowak.dev/nginx-caching-server/">
+
+    </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M41S9J7JLB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M41S9J7JLB');
+</script>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://knowak.dev" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            knowak.dev
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://knowak.dev">blog</a></li>
+            
+                <li><a href="https://knowak.dev/tags">tags</a></li>
+            
+                <li><a href="https://knowak.dev/archive">archive</a></li>
+            
+                <li><a href="https://knowak.dev/about">about me/contact</a></li>
+            
+                <li><a href="https://github.com/vloneskorpion" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://knowak.dev/nginx-caching-server/">How to use nginx as caching server?</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2025-01-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/caching-server/">#caching_server</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/devops/">#devops</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/linux/">#linux</a>&nbsp;
+                <a class="post-tag" href="https://knowak.dev/tags/nginx/">#nginx</a></span>
+    
+
+        <div class="post-content">
+            <p>In this tutorial, we’ll explore the caching functionality of nginx by creating a simple caching server. By following the steps below, you can set up your own environment to cache responses using nginx.</p>
+<span id="continue-reading"></span>
+<p>For those who don't know what nginx is - a high-performance, open-source web server that’s also frequently used as a reverse proxy, load balancer, and content cache. It was designed to handle large numbers of concurrent connections efficiently, often making it a go-to choice for high-traffic websites. </p>
+<p>First, install nginx if you haven’t already:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> apt install nginx
+</span></code></pre>
+<p>Then enable and start it via systemd:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> systemctl enable</span><span style="color:#f29718;"> --now</span><span> nginx
+</span></code></pre>
+<p>Next, create a dedicated directory for caching and secure it:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> mkdir</span><span style="color:#f29718;"> -p</span><span> /var/cache/nginx
+</span><span style="color:#ffb454;">sudo</span><span> chmod 700 /var/cache/nginx
+</span></code></pre>
+<p>Open the main nginx configuration file <code>/etc/nginx/nginx.conf</code> in your favourite editor. Replace the existing http { ... } block with the following:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">http </span><span>{
+</span><span>    proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m use_temp_path=off;
+</span><span>	
+</span><span>    server {
+</span><span>        listen 80;
+</span><span>        server_name caching_server;
+</span><span>        location / {
+</span><span>            proxy_pass http://127.0.0.1:1234;
+</span><span>            proxy_cache my_cache;
+</span><span>            proxy_cache_valid 200 1h;
+</span><span>            proxy_cache_valid 404 30m;
+</span><span>            proxy_cache_use_stale error timeout invalid_header updating;
+</span><span>            add_header X-Cache-Status $upstream_cache_status;
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>It seems to be a lot of lines, but actually it's not complicated at all. Here is detailed description of what each option does:</p>
+<ul>
+<li><code>proxy_cache_path</code>
+<ul>
+<li><code>/var/cache/nginx</code> - specifies the dir where cached files will be stored</li>
+<li><code>levels=1:2</code> - defines the dir structure for the cache, <code>1:2</code> means that the cache will have two levels of subdirectories, thats how it will look like after cache will be created:</li>
+</ul>
+</li>
+</ul>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/nginx_caching_server/20250110183455.png" class="center" decoding="async" loading="lazy"/>
+
+<ul>
+<li><code>keys_zone=my_cache:10m</code> - allocates a shared memory zone with name <code>my_cache</code> and <code>10 MB</code> of storage for cache metadata. This memory is used for fast lookup for cached responses.
+<ul>
+<li><code>max_size=10g</code> - limits the total size of the cache to 10 GB, when it reaches the limit old files are removed</li>
+<li><code>inactive=60m</code> - specifies that the cached items will be removed if not accesses within 60 mins</li>
+<li><code>use_temp_path=off</code> - ensures cached files are written directly to the cache directory instead of temporary directory</li>
+</ul>
+</li>
+<li><code>server</code> block defines settings for the virtual server
+<ul>
+<li><code>listen 80</code> - specifies port to listen on</li>
+<li><code>server_name caching_server</code> - specifies the server name</li>
+<li><code>location /</code> - specifies settings for specific URL path in this case <code>/</code>
+<ul>
+<li><code>proxy_pass http://127.0.0.1:1234</code>  - directs requests to the backend server at provided path, in this example we will direct requests to <code>localhost</code> on post <code>1234</code></li>
+<li><code>proxy_cache my_cache</code> - enables caching for this location using the cache defined in <code>my_cache</code></li>
+<li><code>proxy_cache_valid 200 1h</code> - specifies that responses with return status 200 (OK) will be cached for 1h</li>
+<li><code>proxy_cache_valid 404 30m</code> - specifies that responses with return status 404 (Not Found) will be cached for 30 mins</li>
+<li><code>proxy_cache_use_stale error timeout invalid_header updating</code> - allows serving cached content in specific scenarios related to backend server: <code>error</code> - server unavailable, <code>timeout</code> - server takes too much time to respond, <code>invalid_header</code> - response from backend is invalid, <code>updating</code> - when a fresh version of the cache is being updated</li>
+<li><code>add_header X-Cache-Status $upstream_cache_status</code> - adds custom header to responses for reporting cache status: <code>MISS</code> - response not found in cache, <code>HIT</code> - response found in cache, <code>EXPIRED</code> - cached response expired and a new one was fetched</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>If you don't want to change <code>server_name caching_server</code> in your configuration to your own one, make sure that your system can resolve the hostname caching_server. One way to do this is by adding an entry to your <code>/etc/hosts</code> file:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f07178;">echo </span><span style="color:#c2d94c;">&quot;127.0.0.1  caching_server&quot; </span><span style="color:#f29668;">| </span><span style="color:#ffb454;">sudo</span><span> tee</span><span style="color:#f29718;"> -a</span><span> /etc/hosts
+</span></code></pre>
+<p>Check if syntax of edited config file is correct via:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">nginx</span><span style="color:#f29718;"> -t
+</span></code></pre>
+<p>If everything is ok, then reload nginx using systemctl so changes will be applied:</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb454;">sudo</span><span> systemctl reload nginx
+</span></code></pre>
+<p>Now, when you know what each option does we can proceed to test new configuration. Let's create simple server using <code>netcat</code> in while loop which will give a simple response each time we access <code>localhost</code> at port <code>1234</code>.</p>
+<pre data-lang="bash" style="background-color:#0f1419;color:#bfbab0;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ff7733;">while </span><span style="color:#ffb454;">true</span><span style="color:#f29668;">; </span><span style="color:#ff7733;">do
+</span><span>    </span><span style="color:#f07178;">echo </span><span style="color:#f29718;">-e </span><span style="color:#c2d94c;">&quot;HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 13\r\n\r\nHello, world!&quot; </span><span style="color:#f29668;">| </span><span style="color:#ffb454;">nc</span><span style="color:#f29718;"> -l -p</span><span> 1234</span><span style="color:#f29668;">;
+</span><span style="color:#ff7733;">done
+</span></code></pre>
+<p>Now from other terminal session we can <code>curl</code> our backend server and see if caching utility works:</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/nginx_caching_server/20250110183735.png" class="center" decoding="async" loading="lazy"/>
+
+<p>The first request should return an X-Cache-Status: MISS, meaning it wasn’t in the cache initially. Subsequent requests should return X-Cache-Status: HIT, indicating the response has been cached.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/nginx_caching_server/20250110183830.png" class="center" decoding="async" loading="lazy"/>
+
+<p>It works, let's check contents of <code>/var/cache/nginx</code> directory.</p>
+
+  
+  
+    
+    
+  
+  <img src="https://knowak.dev/images/nginx_caching_server/20250110183455.png" class="center" decoding="async" loading="lazy"/>
+
+<p>As you can see our cache exists in disk memory.</p>
+<p>That’s it! By following these steps, you’ve set up a simple nginx caching server and learned how to inspect whether responses are coming from cache. You can adapt these settings to fit your production environment or further explore advanced caching features like cache purging or conditional caching.</p>
+
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                    <hr />
+                </div>
+                <div class="pagination__buttons">
+                        <span class="button previous">
+                            <a href="https://knowak.dev/lxc-containers-access-from-lan/">
+                                <span class="button__icon">←</span>&nbsp;
+                                <span class="button__text">How to access LXC container from LAN?</span>
+                            </a>
+                        </span>
+                    
+                    </div>
+            </div>
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ knowak</span>
+                    </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
