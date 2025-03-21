@@ -1,0 +1,102 @@
+/* CSS fix to place tags below date on desktop */
+
+/* Global styles for tag positioning */
+.posts-section .post-tags,
+.posts-list .post-tags,
+.taxonomy-page .post-tags {
+  margin-top: 1rem !important;
+  display: block !important;
+  width: 100% !important;
+  clear: both !important;
+}
+
+/* Specific fix for taxonomy pages (tag search results) */
+.taxonomy-page .post-meta {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.taxonomy-page .post-summary {
+  margin-top: 0.5rem !important;
+  order: 2 !important;
+}
+
+.taxonomy-page .post-tags {
+  order: 3 !important;
+}
+
+@media screen and (min-width: 769px) {
+  /* Only meta information should be centered, not all post content */
+  .post-card, article.post-card {
+    text-align: left !important;
+  }
+  
+  /* Only meta information is centered, not post content */
+  .post-meta,
+  .posts-list .post-meta,
+  .tags-container .post-meta,
+  .taxonomy-container .post-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Ensure post content stays left-aligned */
+  .post-content, 
+  .post-card .post-content,
+  article.post-card .post-content {
+    text-align: left !important;
+  }
+  
+  /* Top row container for date and time to read */
+  .post-meta::before {
+    content: "" !important;
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Date and time to read on the same line and centered */
+  .post-date {
+    display: inline-block !important;
+    margin-right: 1rem !important;
+    text-align: center !important;
+  }
+  
+  .post-timeToRead {
+    display: inline-block !important;
+    text-align: center !important;
+  }
+  
+  /* Position tags below date and time to read */
+  .post-tags,
+  .posts-list .post-tags,
+  .tags-container .post-tags,
+  .taxonomy-container .post-tags,
+  .term-container .post-tags {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 0.5rem !important;
+    text-align: center !important;
+  }
+  
+  /* Calendar and clock icons alignment */
+  .post-meta i.fas {
+    margin-right: 5px !important;
+  }
+}
+
+/* Keep mobile layout as is */
+@media screen and (max-width: 768px) {
+  .post-meta {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+}

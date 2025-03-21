@@ -1,0 +1,73 @@
+/* Fix for list indentation and bullets on mobile view */
+
+/* Apply to all screen sizes as a global fix */
+.post-content ul,
+.post-content ol {
+  padding-left: 2rem !important;
+  margin-left: 0.5rem !important;
+  width: auto !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+.post-content li {
+  display: list-item !important;
+  list-style-position: outside !important;
+  margin-bottom: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+
+.post-content ul li {
+  list-style-type: disc !important;
+}
+
+.post-content ol li {
+  list-style-type: decimal !important;
+}
+
+.post-content ul ul,
+.post-content ul ol,
+.post-content ol ul,
+.post-content ol ol {
+  padding-left: 2rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* More specific for mobile screens */
+@media (max-width: 800px) {
+  /* Reset any padding or margin that might be causing issues */
+  .post-content {
+    padding: 1rem !important;
+  }
+  
+  /* Force list display */
+  .post-content ul,
+  .post-content ol {
+    padding-left: 2rem !important;
+    margin-left: 0 !important;
+    width: auto !important;
+    display: block !important;
+  }
+
+  /* Force bullet display */
+  .post-content ul li {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    display: list-item !important;
+  }
+  
+  /* Force number display */
+  .post-content ol li {
+    list-style-type: decimal !important;
+    list-style-position: outside !important;
+    display: list-item !important;
+  }
+  
+  /* Override any zero padding in parent containers */
+  .post-content p,
+  .post-content div,
+  .post-content section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

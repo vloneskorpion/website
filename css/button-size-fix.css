@@ -1,0 +1,23 @@
+/* Fix for read more button size consistency */
+
+/* Apply mobile-sized buttons to all screen sizes */
+.read-more,
+.post-card .read-more,
+.post-summary .read-more,
+div.post-summary a.read-more {
+  font-size: 0.8rem !important;
+  padding: 0.3rem 0.6rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* Maintain hover effects */
+.read-more:hover,
+.post-card .read-more:hover,
+.post-summary .read-more:hover,
+div.post-summary a.read-more:hover {
+  background: var(--neon-pink) !important;
+  color: var(--dark-background) !important;
+  transform: translateY(-2px) !important;
+  border: 1px solid var(--neon-pink) !important;
+  border-style: solid !important;
+}

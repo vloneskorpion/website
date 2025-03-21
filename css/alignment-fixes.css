@@ -1,0 +1,60 @@
+/* Alignment Fixes for Hugo Cyberpunk Theme */
+
+/* Global alignment fixes that apply to all screen sizes */
+.post-card,
+article.post-card {
+  padding: 2rem !important;
+  box-sizing: border-box !important;
+  max-width: 1150px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 2rem !important;
+}
+
+.post-meta {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important; 
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.post-date, 
+.post-tags {
+  margin-right: 1rem !important;
+}
+
+/* Handle long post titles */
+h1.post-title, 
+h2.post-title,
+.post-title,
+.post-title a {
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+
+/* Desktop specific overrides */
+@media only screen and (min-width: 1025px) {
+  .post-card,
+  article.post-card {
+    padding: 2rem !important;
+  }
+}
+
+/* Mid-range devices specific overrides */
+@media only screen and (max-width: 1024px) and (min-width: 769px) {
+  .post-card,
+  article.post-card {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Mobile devices specific overrides */
+@media only screen and (max-width: 768px) {
+  .post-card,
+  article.post-card {
+    padding: 1rem !important;
+  }
+}

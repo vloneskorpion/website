@@ -1,0 +1,142 @@
+/* Cyberpunk Theme CSS Overrides */
+
+:root {
+  /* Cyberpunk color palette */
+  --dark-background: #0a0a10;
+  --neon-cyan: #00eeff;
+  --neon-pink: #ff00aa;
+  --neon-purple: #b967ff;
+  --grid-color: rgba(0, 150, 255, 0.1);
+}
+
+/* Background and body styles */
+body {
+  background-color: var(--dark-background);
+  color: #ffffff;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0;
+  padding: 0;
+  max-width: none !important; /* Critical fix to override theme's default width restriction */
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Container styles */
+.container, main, .content {
+  max-width: 1300px !important;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Content elements */
+.post, article, .post-content, .list, .terms {
+  max-width: 1150px !important;
+  margin: 0 auto;
+}
+
+/* Post cards */
+.post-card, .card {
+  max-width: 1150px !important;
+  margin: 0 auto 1.5rem;
+  background-color: rgba(20, 20, 40, 0.7);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.post-card:hover, .card:hover {
+  box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Link styling */
+a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover, a:focus {
+  color: var(--neon-pink);
+}
+
+/* Header and navigation */
+header {
+  background-color: rgba(10, 10, 20, 0.8);
+  border-bottom: 1px solid var(--neon-cyan);
+  padding: 1rem 0;
+}
+
+nav a {
+  margin: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Footer */
+footer {
+  background-color: rgba(10, 10, 20, 0.8);
+  border-top: 1px solid var(--neon-cyan);
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* Code blocks */
+pre, code {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--neon-purple);
+  border-radius: 3px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--neon-cyan);
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid var(--neon-purple);
+  padding: 0.5rem;
+}
+
+th {
+  background-color: rgba(185, 103, 255, 0.2);
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid var(--neon-pink);
+  padding-left: 1rem;
+  font-style: italic;
+  background-color: rgba(255, 0, 170, 0.05);
+}
+
+/* Buttons */
+button, .button {
+  background-color: var(--dark-background);
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover, .button:hover {
+  background-color: var(--neon-cyan);
+  color: var(--dark-background);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 800px) {
+  .container, main, .content, .post, article, .post-content, .list, .terms {
+    width: 100% !important;
+    padding: 0 1rem;
+  }
+}

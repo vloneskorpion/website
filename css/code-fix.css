@@ -1,0 +1,24 @@
+/* Fixes iOS font sizing anomaly in code blocks */
+/* Based on fix from: https://nathan.rs/posts/hugo-code-block-ios/ */
+
+/* Only apply text-size-adjust to code blocks in posts */
+.post-content pre code,
+.post-content code,
+.post-summary pre code,
+.post-summary code {
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Ensure code blocks in Chroma syntax highlighter also get the fix */
+.post-content .highlight pre,
+.post-content .chroma pre,
+.post-summary .highlight pre,
+.post-summary .chroma pre {
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}

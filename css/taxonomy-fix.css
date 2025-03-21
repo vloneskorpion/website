@@ -1,0 +1,30 @@
+/* Very specific fixes for taxonomy description text */
+.taxonomy-description {
+    font-size: 0.8rem !important;
+    color: #aaaaaa !important;
+    font-weight: normal !important;
+}
+
+/* Target the exact taxonomy description containing "Articles tagged with" */
+.taxonomy-page .taxonomy-header .taxonomy-description {
+    font-size: 0.8rem !important;
+    color: #aaaaaa !important;
+    font-weight: normal !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+}
+
+/* Extreme specificity for mobile */
+@media only screen and (max-width: 768px) {
+    body .taxonomy-page .taxonomy-header .taxonomy-description,
+    html body .taxonomy-description,
+    .taxonomy-description,
+    .taxonomy-header .taxonomy-description {
+        font-size: 0.8rem !important;
+        color: #aaaaaa !important;
+        font-weight: normal !important;
+        text-shadow: none !important;
+        letter-spacing: normal !important;
+        max-width: 100% !important;
+    }
+}

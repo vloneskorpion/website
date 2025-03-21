@@ -1,0 +1,144 @@
+/* Mobile Fixes for Hugo Cyberpunk Theme */
+
+/* Global fixes for all screen sizes */
+.post-card,
+article.post-card,
+.posts-list .post-card,
+.post-single,
+.post {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.post-title,
+.tags-title,
+.taxonomy-title {
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Mid-range devices (tablets, small laptops) */
+@media only screen and (max-width: 1024px) and (min-width: 769px) {
+  /* Post card padding and alignment fixes for mid-range */
+  .post-card, article.post-card {
+    padding: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Post meta alignment fixes */
+  .post-meta, .post-card .post-meta {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  /* Ensure post titles maintain consistent size at mid-range resolutions */
+  article.post-card h2.post-title,
+  article.post-card h2.post-title a,
+  .posts-section article.post-card h2.post-title a,
+  .posts-section .post-card .post-title a,
+  .post-card h2.post-title a,
+  .post-title a {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Fix for single post title view */
+  .post-single .post-title {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* Keep tag title headers consistent size */
+  .tags-title,
+  .taxonomy-title {
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* Mobile devices */
+@media only screen and (max-width: 768px) {
+  /* Post card container alignment fixes */
+  .post-card, article.post-card {
+    padding: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Post meta alignment fixes */
+  .post-meta, .post-card .post-meta {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  /* Home Page and Tag Pages Post Titles - Must be larger */
+  article.post-card h2.post-title,
+  article.post-card h2.post-title a,
+  .posts-section article.post-card h2.post-title a,
+  .posts-section .post-card .post-title a,
+  .taxonomy-page article.post-card h2.post-title a,
+  .tag-page article.post-card h2.post-title a,
+  .tags-list article.post-card h2.post-title a,
+  .tags-list .post-card .post-title a,
+  .taxonomy-term .post-card .post-title a,
+  .post-card h2.post-title a,
+  .post-title a {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.5px !important;
+    color: var(--neon-cyan) !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+  }
+  
+  /* Archive Post Titles - Must be smaller */
+  .archive-post .archive-post-title,
+  .archive-page .archive-post-title,
+  .archive-container .archive-post-title {
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: normal !important;
+  }
+  
+  /* Reset any previous mobile title styles */
+  .post-title a {
+    text-decoration: none !important;
+  }
+  
+  /* Make taxonomy headers smaller on mobile */
+  .taxonomy-header .taxonomy-title,
+  .taxonomy-page .taxonomy-title,
+  .terms-page .terms-title {
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .taxonomy-page .taxonomy-header .taxonomy-description,
+  .taxonomy-description,
+  div.taxonomy-description,
+  body .taxonomy-header .taxonomy-description,
+  body .taxonomy-page .taxonomy-description,
+  body .terms-header .terms-description {
+    font-size: 0.85rem !important;
+    opacity: 0.85 !important;
+    margin-bottom: 0.75rem !important;
+    max-width: 100% !important;
+    display: block !important;
+    color: #cccccc !important;
+  }
+  
+  /* Single post page should have large title */
+  .post-content h1.post-title,
+  .page .post-title {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+  }
+}
