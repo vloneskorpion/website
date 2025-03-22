@@ -1,0 +1,24 @@
+/* Mobile fix for cyberpunk theme */
+
+/* Ensure links change color on mobile devices */
+@media (hover: none) {
+  /* Post title links */
+  .post-title a:active,
+  .post-card h2 a:active,
+  a:active {
+    color: #ff00aa !important; /* Neon pink - using direct hex to ensure it works */
+  }
+  
+  /* Make tap targets bigger on mobile */
+  .post-card h2 a,
+  .post-title a,
+  nav a {
+    padding: 8px !important;
+    display: inline-block;
+  }
+}
+
+/* Force color for various link states to ensure they work */
+a:hover, a:focus, a:active {
+  color: #ff00aa !important;
+}
